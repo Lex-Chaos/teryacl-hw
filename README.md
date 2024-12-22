@@ -147,13 +147,20 @@
 Изучите содержимое файла console.tf. Откройте terraform console, выполните следующие задания: 
 
 1. Напишите, какой командой можно отобразить **второй** элемент списка test_list.
+
+![Элемент списка](https://github.com/Lex-Chaos/teryacl-hw/blob/main/img/Task_7_1.png)
+
 2. Найдите длину списка test_list с помощью функции length(<имя переменной>).
+
+![Длина списка](https://github.com/Lex-Chaos/teryacl-hw/blob/main/img/Task_7_2.png)
+
 3. Напишите, какой командой можно отобразить значение ключа admin из map test_map.
+
+![Значение ключа](https://github.com/Lex-Chaos/teryacl-hw/blob/main/img/Task_7_3.png)
+
 4. Напишите interpolation-выражение, результатом которого будет: "John is admin for production server based on OS ubuntu-20-04 with X vcpu, Y ram and Z virtual disks", используйте данные из переменных test_list, test_map, servers и функцию length() для подстановки значений.
 
-**Примечание**: если не догадаетесь как вычленить слово "admin", погуглите: "terraform get keys of map"
-
-В качестве решения предоставьте необходимые команды и их вывод.
+![Выражение](https://github.com/Lex-Chaos/teryacl-hw/blob/main/img/Task_7_4.png)
 
 ------
 
@@ -181,11 +188,50 @@ test = [
   },
 ]
 ```
+
+Определение переменной:
+
+```
+variable "test" {
+  type          = list(map(list(string)))
+  default       = [
+    {
+      "dev1" = [
+        "ssh -o 'StrictHostKeyChecking=no' ubuntu@62.84.124.117",
+        "10.0.1.7"
+      ]
+    },
+    {
+      "dev2" = [
+        "ssh -o 'StrictHostKeyChecking=no' ubuntu@84.252.140.88",
+        "10.0.2.29"
+      ]
+    },
+    {
+      "prod1" = [
+        "ssh -o 'StrictHostKeyChecking=no' ubuntu@51.250.2.101",
+        "10.0.1.30"
+      ]
+    }
+  ]
+}
+```
+
+![Вывод переменной](https://github.com/Lex-Chaos/teryacl-hw/blob/main/img/Task_8_1.png)
+
+
 2. Напишите выражение в terraform console, которое позволит вычленить строку "ssh -o 'StrictHostKeyChecking=no' ubuntu@62.84.124.117" из этой переменной.
-------
+
+![Вывод значения](https://github.com/Lex-Chaos/teryacl-hw/blob/main/img/Task_8_2.png)
 
 ------
 
 ### Задание 9*
 
 Используя инструкцию https://cloud.yandex.ru/ru/docs/vpc/operations/create-nat-gateway#tf_1, настройте для ваших ВМ nat_gateway. Для проверки уберите внешний IP адрес (nat=false) у ваших ВМ и проверьте доступ в интернет с ВМ, подключившись к ней через serial console. Для подключения предварительно через ssh измените пароль пользователя: ```sudo passwd ubuntu```
+
+
+![curl google.com](https://github.com/Lex-Chaos/teryacl-hw/blob/main/img/Task_9_1.png)
+
+![curl mail.ru](https://github.com/Lex-Chaos/teryacl-hw/blob/main/img/Task_9_2.png)
+

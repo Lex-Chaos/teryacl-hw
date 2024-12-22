@@ -10,3 +10,7 @@ output "VitrMashns" {
   description = "VM's params"
 #   depends_on  = []
 }
+
+output "test" {
+  value = var.test
+}
