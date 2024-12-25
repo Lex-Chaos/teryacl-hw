@@ -9,4 +9,4 @@
 *.tfstate.*
 
 # Own files
-**/.files_2/*
+**/files_2/*

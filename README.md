@@ -60,12 +60,15 @@
 
 ![Внешний ip](https://github.com/Lex-Chaos/teryacl-hw/blob/main/img/Task_1_2.png)
 
+Параметры ```preemptible = true``` и ```core_fraction=5``` можно применять для уменьшения стоимости использования ВМ.
+
 ### Задание 2
 
 1. Замените все хардкод-**значения** для ресурсов **yandex_compute_image** и **yandex_compute_instance** на **отдельные** переменные. К названиям переменных ВМ добавьте в начало префикс **vm_web_** .  Пример: **vm_web_name**.
 2. Объявите нужные переменные в файле variables.tf, обязательно указывайте тип переменной. Заполните их **default** прежними значениями из main.tf. 
 3. Проверьте terraform plan. Изменений быть не должно. 
 
+![Применил изменения](https://github.com/Lex-Chaos/teryacl-hw/blob/main/img/Task_2_1.png)
 
 ### Задание 3
 
@@ -73,6 +76,7 @@
 2. Скопируйте блок ресурса и создайте с его помощью вторую ВМ в файле main.tf: **"netology-develop-platform-db"** ,  ```cores  = 2, memory = 2, core_fraction = 20```. Объявите её переменные с префиксом **vm_db_** в том же файле ('vms_platform.tf').  ВМ должна работать в зоне "ru-central1-b"
 3. Примените изменения.
 
+![Добавил ВМ](https://github.com/Lex-Chaos/teryacl-hw/blob/main/img/Task_3_1.png)
 
 ### Задание 4
 
@@ -81,6 +85,7 @@
 
 В качестве решения приложите вывод значений ip-адресов команды ```terraform output```.
 
+![outputs](https://github.com/Lex-Chaos/teryacl-hw/blob/main/img/Task_4_1.png)
 
 ### Задание 5
 
@@ -88,6 +93,7 @@
 2. Замените переменные внутри ресурса ВМ на созданные вами local-переменные.
 3. Примените изменения.
 
+![locals](https://github.com/Lex-Chaos/teryacl-hw/blob/main/img/Task_5_1.png)
 
 ### Задание 6
 
@@ -125,6 +131,8 @@
 5. Найдите и закоментируйте все, более не используемые переменные проекта.
 6. Проверьте terraform plan. Изменений быть не должно.
 
+![map](https://github.com/Lex-Chaos/teryacl-hw/blob/main/img/Task_6_1.png)
+
 ------
 
 ## Дополнительное задание (со звёздочкой*)
@@ -139,13 +147,20 @@
 Изучите содержимое файла console.tf. Откройте terraform console, выполните следующие задания: 
 
 1. Напишите, какой командой можно отобразить **второй** элемент списка test_list.
+
+![Элемент списка](https://github.com/Lex-Chaos/teryacl-hw/blob/main/img/Task_7_1.png)
+
 2. Найдите длину списка test_list с помощью функции length(<имя переменной>).
+
+![Длина списка](https://github.com/Lex-Chaos/teryacl-hw/blob/main/img/Task_7_2.png)
+
 3. Напишите, какой командой можно отобразить значение ключа admin из map test_map.
+
+![Значение ключа](https://github.com/Lex-Chaos/teryacl-hw/blob/main/img/Task_7_3.png)
+
 4. Напишите interpolation-выражение, результатом которого будет: "John is admin for production server based on OS ubuntu-20-04 with X vcpu, Y ram and Z virtual disks", используйте данные из переменных test_list, test_map, servers и функцию length() для подстановки значений.
 
-**Примечание**: если не догадаетесь как вычленить слово "admin", погуглите: "terraform get keys of map"
-
-В качестве решения предоставьте необходимые команды и их вывод.
+![Выражение](https://github.com/Lex-Chaos/teryacl-hw/blob/main/img/Task_7_4.png)
 
 ------
 
@@ -173,11 +188,50 @@ test = [
   },
 ]
 ```
+
+Определение переменной:
+
+```
+variable "test" {
+  type          = list(map(list(string)))
+  default       = [
+    {
+      "dev1" = [
+        "ssh -o 'StrictHostKeyChecking=no' ubuntu@62.84.124.117",
+        "10.0.1.7"
+      ]
+    },
+    {
+      "dev2" = [
+        "ssh -o 'StrictHostKeyChecking=no' ubuntu@84.252.140.88",
+        "10.0.2.29"
+      ]
+    },
+    {
+      "prod1" = [
+        "ssh -o 'StrictHostKeyChecking=no' ubuntu@51.250.2.101",
+        "10.0.1.30"
+      ]
+    }
+  ]
+}
+```
+
+![Вывод переменной](https://github.com/Lex-Chaos/teryacl-hw/blob/main/img/Task_8_1.png)
+
+
 2. Напишите выражение в terraform console, которое позволит вычленить строку "ssh -o 'StrictHostKeyChecking=no' ubuntu@62.84.124.117" из этой переменной.
-------
+
+![Вывод значения](https://github.com/Lex-Chaos/teryacl-hw/blob/main/img/Task_8_2.png)
 
 ------
 
 ### Задание 9*
 
 Используя инструкцию https://cloud.yandex.ru/ru/docs/vpc/operations/create-nat-gateway#tf_1, настройте для ваших ВМ nat_gateway. Для проверки уберите внешний IP адрес (nat=false) у ваших ВМ и проверьте доступ в интернет с ВМ, подключившись к ней через serial console. Для подключения предварительно через ssh измените пароль пользователя: ```sudo passwd ubuntu```
+
+
+![curl google.com](https://github.com/Lex-Chaos/teryacl-hw/blob/main/img/Task_9_1.png)
+
+![curl mail.ru](https://github.com/Lex-Chaos/teryacl-hw/blob/main/img/Task_9_2.png)
+
